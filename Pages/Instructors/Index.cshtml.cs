@@ -50,6 +50,8 @@ namespace ContosoUniversity.Pages.Instructors
                 CourseID = courseID.Value;
                 var selectedCourse = InstructorData.Courses
                     .Where(x => x.CourseID == courseID).Single();
+                await _context.Entry(selectedCourse)
+                    .Collection(x => x.Enrollments).LoadAsync();
                 foreach (Enrollment enrollment in selectedCourse.Enrollments)
                 {
                     await _context.Entry(enrollment).Reference(x => x.Student).LoadAsync();
