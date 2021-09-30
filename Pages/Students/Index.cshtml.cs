@@ -25,17 +25,26 @@ namespace ContosoUniversity.Pages.Students
         public string CurrentSort { get; set; }
 
 
-        public IList<Student> Student { get;set; }
+        public IList<Student> Students { get;set; }
 
 
-        public async Task OnGetAsync(string sortOrder)
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
             //using System
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
 
+            CurrentFilter = searchString;
+
             IQueryable<Student> studentsIQ = from s in _context.Students
                                              select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                studentsIQ = studentsIQ.Where(s => s.LastName.Contains(searchString)
+                    || s.FirstMidName.Contains(searchString));
+            }
+
 
             switch (sortOrder)
             {
@@ -53,7 +62,7 @@ namespace ContosoUniversity.Pages.Students
                     break;
             }
 
-            Student = await studentsIQ.AsNoTracking().ToListAsync();
+            Students = await studentsIQ.AsNoTracking().ToListAsync();
         }
     }
 }
