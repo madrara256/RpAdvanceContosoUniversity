@@ -28,7 +28,7 @@ namespace ContosoUniversity.Pages.Students
         public string CurrentSort { get; set; }
 
 
-        public PaginatedList<Student> Students { get;set; }
+        public PaginatedList<Student> Students { get; set; }
 
 
         public async Task OnGetAsync(string sortOrder,
@@ -80,4 +80,5 @@ namespace ContosoUniversity.Pages.Students
             Students = await PaginatedList<Student>.CreateAsync(
                 studentsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
         }
+    }
 }

@@ -70,12 +70,11 @@ namespace ContosoUniversity.Pages.Students
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError("./Delete",
-                    new {id, saveChangesError = true });
-            }
-            
+                _logger.LogError(ex, ErrorMessage);
 
-            return RedirectToPage("./Index");
+                return RedirectToAction("./Delete",
+                                     new { id, saveChangesError = true });
+            }
         }
     }
 }
