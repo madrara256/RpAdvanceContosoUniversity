@@ -28,24 +28,13 @@ namespace ContosoUniversity.Pages.Instructors
                 return NotFound();
             }
 
-            Instructor instructor = await _context.Instructors
-                .Include(i => i.Courses)
-                .SingleAsync(i => i.ID == id);
+            Instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (instructor == null)
+            if (Instructor == null)
             {
-                return RedirectToPage("./Index");
+                return NotFound();
             }
-
-            var departments = await _context.Departments
-                .Where(d => d.InstructorID == id)
-                .ToListAsync();
-            departments.ForEach(d => d.InstructorID = null);
-
-            //_context.Instructors.Remove(instructor);
-
-            await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }
