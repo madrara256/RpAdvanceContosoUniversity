@@ -11,7 +11,8 @@ namespace ContosoUniversity.Pages.Instructors
     {
         public List<AssignedCourseData> AssignedCourseDataList;
 
-        public void PopulateAssinedCourseData(SchoolContext context, Instructor instructor)
+        public void PopulateAssignedCourseData(SchoolContext context,
+                                               Instructor instructor)
         {
             var allCourses = context.Courses;
             var instructorCourses = new HashSet<int>(
@@ -25,7 +26,6 @@ namespace ContosoUniversity.Pages.Instructors
                     Title = course.Title,
                     Assigned = instructorCourses.Contains(course.CourseID)
                 });
-
             }
         }
     }
