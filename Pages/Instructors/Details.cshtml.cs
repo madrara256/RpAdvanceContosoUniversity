@@ -42,7 +42,7 @@ namespace ContosoUniversity.Pages.Instructors
                 .ToListAsync();
             departments.ForEach(d => d.InstructorID = null);
 
-            _context.Instructors.Remove(instructor);
+            //_context.Instructors.Remove(instructor);
 
             await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
